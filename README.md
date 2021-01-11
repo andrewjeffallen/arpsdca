@@ -14,7 +14,7 @@ The [execute_arps](https://github.com/andrewjeffallen/arpsdca/blob/main/arps/fit
 
 #### Using `arpsdca` on your production data
 
-| API          | production_rate  | Right-aligned |
-| :---         |     :---:        |          ---: |
-| git status   | git status       | git status    |
-| git diff     | git diff         | git diff      |
+| API             | production_rate             |  drill_date   |
+| :---            |    :---:                    |          ---: |
+| Unique Well num |     Production rate in BBL, |          | git status    |
+                  |                     sdf        |
