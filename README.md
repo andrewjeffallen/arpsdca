@@ -10,7 +10,7 @@ At the core, this repository includes:
 
 ## Usage
 
-The [execute_arps](https://github.com/andrewjeffallen/arpsdca/blob/main/arps/fit_arps.py) allows you to find the `qi`, `b`, and `di` variables in Arps equation in an automated fashion.
+The [execute_arps](https://github.com/andrewjeffallen/arpsdca/blob/main/arps/fit_arps.py) allows you to find the `qi`, `b`, and `di` variables in Arps equation in an automated fashion using functions defined in the [arps](https://github.com/andrewjeffallen/arpsdca/blob/main/arps/dca.py) module
 
 #### Using `arpsdca` on your production data
 
@@ -21,3 +21,11 @@ your dataset should have the general structure:
 | Unique Well num |  rate in BBL, Gal, or Mcf   |   timestamp   |
 
 You may have 1 or many wells in the dataset, the `execute_arps` will work regardless!
+
+
+#### Using LSTM for production data
+
+Using the same data structure as defined above, the [lstm.py](https://github.com/andrewjeffallen/arpsdca/blob/main/arps/lstm.py) module allows you to train, validate, test long short term memory recurrent neural network on your production data. 
+
+_/coming soon: 
+
