@@ -14,7 +14,10 @@ The [execute_arps](https://github.com/andrewjeffallen/arpsdca/blob/main/arps/fit
 
 #### Using `arpsdca` on your production data
 
+your dataset should have the general structure:
+
 | API             | production_rate             |  drill_date   |
 | :---            |    :---:                    |          ---: |
-| Unique Well num |     Production rate in BBL, |          | git status    |
-                  |                     sdf        |
+| Unique Well num |  rate in BBL, Gal, or Mcf   |   timestamp   |
+
+You may have 1 or many wells in the dataset, the `execute_arps` will work regardless!
