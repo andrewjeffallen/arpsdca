@@ -32,7 +32,7 @@ Using the same data structure as defined above, the [lstm.py](https://github.com
 #### Arps
 * Bounding of the `di` variable in EUR calculation
 * What-if scenario with corresponding side-by-side DCA plots and EUR values
-* Microsoft Excel plugin 
+* Microsoft Excel plugin and data export
 #### LSTM
 * Parameterized PCA as input neurons
 * custom `cost_function` object
