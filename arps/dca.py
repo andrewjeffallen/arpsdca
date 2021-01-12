@@ -3,7 +3,6 @@ def hyperbolic_equation(t, qi, b, di):
     
     
 def get_min_or_max_value_in_column_by_group(dataframe, group_by_column, calc_column, calc_type):
-    """
     value=dataframe.groupby(group_by_column)[calc_column].transform(calc_type)
     return value
     
