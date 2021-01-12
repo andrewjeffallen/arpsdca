@@ -27,6 +27,7 @@ You may have 1 or many wells in the dataset, the `execute_arps` will work regard
 
 Using the same data structure as defined above, the [lstm.py](https://github.com/andrewjeffallen/arpsdca/blob/main/arps/lstm.py) module allows you to train, validate, test long short term memory recurrent neural network on your production data. 
 
+| 
 *coming soon*
 * EUR cost calculations built in to `execute_arps`  
 * Parameterized `LSTM` and custom `cost_function` object
