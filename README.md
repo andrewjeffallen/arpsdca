@@ -29,7 +29,14 @@ Using the same data structure as defined above, the [lstm.py](https://github.com
 
 
 ## *Features coming soon*
-* EUR cost calculations built in to `execute_arps`  
-* Parameterized `LSTM` and custom `cost_function` object
+#### Arps
+* Bounding of the `di` variable in EUR calculation
+* What-if scenario with corresponding side-by-side DCA plots and EUR values
+#### LSTM
+* Parameterized PCA as input neurons
+* custom `cost_function` object
+* improved speed and performance for training multiple time series 
+
+
 
 
