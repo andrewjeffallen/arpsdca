@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 def hyperbolic_equation(t, qi, b, di):
     return qi/((1.0+b*di*t)**(1.0/b))
     
