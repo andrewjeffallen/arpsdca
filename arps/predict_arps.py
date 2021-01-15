@@ -5,7 +5,7 @@ from arps.dca import hyperbolic_equation
 
 # Use fitted equation from arps.fit_arps to create EUR prediction with CI intervals
 
-def predict_arps(prd_time_series, API, liquid, qi_min, b_min, di_min,qi_max, b_max, di_max,):
+def predict_arps(prd_time_series, API, liquid, qi_min, b_min, di_min,qi_max, b_max, di_max,sigma_fit,sigma_pred,pred_interval):
   df = pd.read_csv(f'{prd_time_series}.csv')
   
   df = df.astype({"API": str,f'{liquid}':float})
@@ -55,7 +55,7 @@ def predict_arps(prd_time_series, API, liquid, qi_min, b_min, di_min,qi_max, b_m
 
   # calculate the (1 sigma) uncertainty in the predicted model
   # and plot that as a confidence band
-  dprod = result.eval_uncertainty(result.params, sigma=10)   
+  dprod = result.eval_uncertainty(result.params, sigma=sigma_fit)   
   plt.fill_between(cumsum_days,
                    result.best_fit-dprod,
                    result.best_fit+dprod,
@@ -63,7 +63,7 @@ def predict_arps(prd_time_series, API, liquid, qi_min, b_min, di_min,qi_max, b_m
                    label='uncertainty band of fit')
 
   # now evaluate the model for other values, predicting future values
-  future_days = np.array(np.arange(max(cumsum_days+1),2434+3000))
+  future_days = np.array(np.arange(max(cumsum_days+1),pred_interval))
   future_prod = result.eval(t=future_days)
   eur = sum(prod)+sum(future_prod)
 
@@ -71,7 +71,7 @@ def predict_arps(prd_time_series, API, liquid, qi_min, b_min, di_min,qi_max, b_m
 
   # ...and calculate the 1-sigma uncertainty in the future prediction
   # for 95% confidence level, you'd want to use `sigma=2` here:
-  future_dprod = result.eval_uncertainty(t=future_days, sigma=1)
+  future_dprod = result.eval_uncertainty(t=future_days, sigma=sigma_pred)
 
   #print("### Prediction\n# Day  Prod     Uncertainty")
 
