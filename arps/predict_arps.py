@@ -5,14 +5,29 @@ from arps.dca import hyperbolic_equation
 
 # Use fitted equation from arps.fit_arps to create EUR prediction with CI intervals
 
-def predict_arps(prd_time_series, API, liquid, qi_min, b_min, di_min,qi_max, b_max, di_max,sigma_fit,sigma_pred,pred_interval):
+def predict_arps(prd_time_series, well_nm, liquid, qi_min, b_min, di_min,qi_max, b_max, di_max,sigma_fit,sigma_pred,pred_interval):
+  """
+  prd_time_series: (str) a production time series in form of a csv
+  well_nm: (str, int) the API, or well ID/ name 
+  liquid: (str) the type of liquid to calculuate EUR
+  qi_min: (int) qi lower bound 
+  b_min: (int) bi lower bound 
+  di_min: (int) di lower bound 
+  qi_max: (int) qi upper bound  
+  b_max: (int) bi upper bound 
+  di_max: (int) di upper bound 
+  sigma_fit: (int) significance level for fitted curve
+  sigma_pred: (int) significance level for predicted curve
+  pred_interval: (float) future number of days to predict 
+  
+  """
   df = pd.read_csv(f'{prd_time_series}.csv')
   
   df = df.astype({"API": str,f'{liquid}':float})
   df = df[(df[f'{liquid}'].notnull()) & (df[f'{liquid}']>0)]
   df['days'] = df.groupby('API').cumcount()+1
   
-  filtered_df = df[df.API==f'{API}']
+  filtered_df = df[df.API==f'{well_nm}']
   cumsum_days = filtered_df['days']
   prod = filtered_df[f'{liquid}']
 
