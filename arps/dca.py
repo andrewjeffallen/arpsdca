@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 def hyperbolic_equation(t, qi, b, di):
-    return qi/((1.0+b*di*t)**(1.0/b))
+    return qi/((1.0+b*di*t)**(1.0/max(b, 1.e-50)))
     
     
 def get_min_or_max_value_in_column_by_group(dataframe, group_by_column, calc_column, calc_type):
@@ -27,3 +27,4 @@ def remove_nan_and_zeroes_from_columns(df, variable):
     """
     filtered_df = df[(df[variable].notnull()) & (df[variable]>0)]
     return filtered_df
+
