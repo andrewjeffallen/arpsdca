@@ -4,7 +4,7 @@ import sys
 import matplotlib.pyplot as plt
 
 from lmfit import Model
-from arps.dca import hyperbolic_equation
+from arps.dca_utils import hyperbolic_equation
 
 # Use fitted equation from arps.fit_arps to create EUR prediction with CI intervals
 
