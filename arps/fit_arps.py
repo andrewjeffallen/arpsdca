@@ -1,5 +1,6 @@
 import pandas 
 import numpy as np
+import sys
 
 
 from scipy.optimize import curve_fit
@@ -10,7 +11,7 @@ from arps.dca_utils import (
 )
 
 
-def execute_arps(well_list,prod_data, time_interval, days,liquid, b_upper,  di_bound, **kwargs):
+def execute_arps(well_list,prod_data, days,liquid, b_upper,  di_bound, **kwargs):
       
       well_list = prod_data.API.unique()
       
@@ -66,3 +67,18 @@ def execute_arps(well_list,prod_data, time_interval, days,liquid, b_upper,  di_b
               #Plot the data to visualize the equation fit
               plot_dca(prod_ts, x_variable, y_variables, plot_title)
 
+if __name__ == "__main__":
+      
+      well_list = sys.argv[1]
+      prod_data = sys.argv[2]
+      days = sys.argv[3]
+      liquid = sys.argv[4]
+      b_upper = sys.argv[6]
+      di_bound = sys.argv[7]
+      
+      return_code = execute_arps(well_list,prod_data, days,liquid, b_upper,  di_bound)
+      
+      if return_code == 0:
+            sys.exit(0)
+      else:
+            raise SystemError(f"Error {return_code}")
