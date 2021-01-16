@@ -1,6 +1,9 @@
 import numpy as np
-from lmfit import Model
+import pandas as pd
+import sys
 import matplotlib.pyplot as plt
+
+from lmfit import Model
 from arps.dca import hyperbolic_equation
 
 # Use fitted equation from arps.fit_arps to create EUR prediction with CI intervals
@@ -102,3 +105,26 @@ def predict_arps(prd_time_series, well_nm, liquid, qi_min, b_min, di_min,qi_max,
   plt.legend(loc='upper right')
   print("EUR: ", eur)
   plt.show()
+  
+if __name__ == "__main__":
+  
+  prd_time_series = sys.argv[1]
+  well_nm = sys.argv[2]
+  liquid = sys.argv[3]
+  qi_min = sys.argv[4]
+  b_min = sys.argv[6]
+  di_min = sys.argv[7]
+  qi_max = sys.argv[8]
+  b_max = sys.argv[9]
+  di_max = sys.argv[10]
+  sigma_fit = sys.argv[11]
+  sigma_pred = sys.argv[12]
+  pred_interval = sys.argv[13]
+      
+  return_code = predict_arps(prd_time_series, well_nm, liquid, qi_min, b_min, di_min,qi_max, b_max, di_max,sigma_fit,sigma_pred,pred_interval)
+  
+  if return_code == 0:
+    sys.exit(0)
+  
+  else:
+    raise SystemError(f"Error {return_code}")
