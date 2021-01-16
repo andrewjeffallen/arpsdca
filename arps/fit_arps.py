@@ -3,31 +3,29 @@ import numpy as np
 
 
 from scipy.optimize import curve_fit
-from arps.dca import (
+from arps.dca_utils import (
       hyperbolic_equation, 
-      get_min_or_max_value_in_column_by_group,
-      get_max_initial_production,
-      plot_actual_vs_predicted_by_equations,
-      remove_nan_and_zeroes_from_columns
+      get_qi,
+      plot_dca,
 )
 
 
-def execute_arps(unique_well_APIs_list,prd_time_series, days,liquid, b_upper,  di_bound, **kwargs):
+def execute_arps(unique_well_APIs_list,prd_time_series, time_interval, days,liquid, b_upper,  di_bound, **kwargs):
     for api_number in unique_well_APIs_list:
         production_time_series=prd_time_series[prd_time_series.API==api_number]
+        print("total number of wells in dataset: ",len(production_time_series.API.unique()))
 
-        production_time_series = remove_nan_and_zeroes_from_columns(production_time_series,liquid)
+        production_time_series = production_time_series[(production_time_series[liquid].notnull()) & (production_time_series[liquid]>0)]
+        print("removed missing and zero values from f'{liquid}' column")
 
-        #create running 'day' column
         production_time_series['day'] = production_time_series.groupby(by='API').cumcount()+1
 
         # convert API & Date to string and liquid to float
         production_time_series=production_time_series.astype({"API": str,'day':int,f'{liquid}':float})
 
-
         # Get the highest value of production in the first {days} days of production, to use as qi value
 
-        qi=get_max_initial_production(production_time_series, days, liquid, 'day')
+        qi=get_qi(production_time_series, days, liquid, 'day')
 
         # Hyperbolic curve fit the data to get best fit equation
         popt_hyp, pcov_hyp=curve_fit(hyperbolic_equation, production_time_series['day'], 
@@ -62,5 +60,5 @@ def execute_arps(unique_well_APIs_list,prd_time_series, days,liquid, b_upper,  d
         plot_title='liquid'+' Production for Well API '+str(api_number)
 
         #Plot the data to visualize the equation fit
-        plot_actual_vs_predicted_by_equations(production_time_series, x_variable, y_variables, plot_title)
+        plot_dca(production_time_series, x_variable, y_variables, plot_title)
 
