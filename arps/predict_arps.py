@@ -26,16 +26,17 @@ def predict_arps(prd_time_series, well_nm, liquid, qi_min, b_min, di_min,qi_max,
   """
   df = pd.read_csv(f'{prd_time_series}.csv')
   
-  df = df.astype({"API": str,f'{liquid}':float})
+  df = df.astype({"api": str,f'{liquid}':float})
   df = df[(df[f'{liquid}'].notnull()) & (df[f'{liquid}']>0)]
-  df['days'] = df.groupby('API').cumcount()+1
+  df['days'] = df.groupby('api').cumcount()+1
   
-  filtered_df = df[df.API==f'{well_nm}']
+  filtered_df = df[df.api==f'{well_nm}']
   cumsum_days = filtered_df['days']
   prod = filtered_df[f'{liquid}']
 
   # plot data
-  plt.plot(cumsum_days, prod,label='data',linewidth=1)
+  
+  plt.plot(cumsum_days, prod,label=f'{liquid}',linewidth=1)
 
   # build Model
   hmodel = Model(hyperbolic_equation)
@@ -66,7 +67,7 @@ def predict_arps(prd_time_series, well_nm, liquid, qi_min, b_min, di_min,qi_max,
   # r-squared
   r2 = 1 - (ss_res / ss_tot)
   print(result.fit_report())
-  print("R-Square: ",r2)
+  print("R-Square: ",str(round(r2*100,3))+'%')
 
   # plot best fit: not that great of fit, really
   plt.plot(cumsum_days, result.best_fit, 'r--', label='fit',linewidth=3)
@@ -128,3 +129,4 @@ if __name__ == "__main__":
   
   else:
     raise SystemError(f"Error {return_code}")
+
