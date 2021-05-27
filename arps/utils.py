@@ -2,7 +2,8 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 
 
-class DeclineCurve():
+class DeclineCurve:
+ 
 
     def hyperbolic_equation(t, qi, b, di):
         return qi/((1.0+b*di*t)**(1.0/max(b, 1.e-50)))
