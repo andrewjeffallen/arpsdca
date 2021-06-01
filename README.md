@@ -10,6 +10,8 @@ At the core, this repository includes:
 
 ## Usage
 
+The [`examples.ipynb`](https://github.com/andrewjeffallen/arpsdca/blob/main/examples.ipynb) shows how to use the core functions `fit_arps` and `predict_arps`. The source code can be found in the [arps](https://github.com/andrewjeffallen/arpsdca/tree/main/arps) folder, namely the `dca` and `utils` modules. 
+
 The [execute_arps](https://github.com/andrewjeffallen/arpsdca/blob/main/arps/fit_arps.py) allows you to find the `qi`, `b`, and `di` variables in Arps equation in an automated fashion using functions defined in the [arps](https://github.com/andrewjeffallen/arpsdca/blob/main/arps/dca.py) module
 
 #### Using `arpsdca` on your production data
