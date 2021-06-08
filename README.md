@@ -1,7 +1,7 @@
 # arpsdca
 
 ## Description
-The `arpsdca` provides a python based solution for Arps decline-curve analysis on oil and gas data. This project was created by Andrew Allen for Master of Engineering Thesis research. For more information on the research, see the research page!!
+The `arpsdca` provides a python based solution for Arps decline-curve analysis on oil and gas data. This project was created by Andrew Allen for Master of Engineering Thesis research. For more information on the research, see the [research](https://github.com/andrewjeffallen/arpsdca/tree/main/arps/research) page!!
 
 At the core, this repository includes:
 * fitting Arps equation via [scipy.optimize.curve_fit](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html)
