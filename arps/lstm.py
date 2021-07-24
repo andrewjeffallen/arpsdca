@@ -8,18 +8,14 @@ from scikit-learn
 from scipy.signal import savgol_filter
 from sklearn.preprocessing import StandardScaler
 
-class data():
-        def __init__(self, filename, split, cols):
-                dataframe = pd.read_csv(filename)
-                i_split = int(len(dataframe) * split)
-                self.data_train = dataframe.get(cols).values[:i_split]
-                self.data_test  = dataframe.get(cols).values[i_split:]
-                self.len_train  = len(self.data_train)
-                self.len_test   = len(self.data_test)
-                self.len_train_windows = None
 
-class oil_lstm():
-        def arps_neural_network(data):
+def arps_neural_network(df):
+        """
+        df = production time series dataframe with 2 columns:
+                1. drill_date (datetime object)
+                2. oil_bbl (float)
+
+        """
         dataframe = production_time_series=df[df.API==api_number]
         dataframe = dataframe[['oil_bbl']]
 
