@@ -39,11 +39,11 @@ class ArpsCurve:
         """
         df = pd.read_csv(f"{prd_time_series}.csv")
 
-        df = df.astype({"api": str, f"{liquid}": float})
+        df = df.astype({"API": str, f"{liquid}": float})
         df = df[(df[f"{liquid}"].notnull()) & (df[f"{liquid}"] > 0)]
-        df["days"] = df.groupby("api").cumcount() + 1
+        df["days"] = df.groupby("API").cumcount() + 1
 
-        filtered_df = df[df.api == f"{well_nm}"]
+        filtered_df = df[df.API == f"{well_nm}"]
         cumsum_days = filtered_df["days"]
         prod = filtered_df[f"{liquid}"]
 
@@ -52,7 +52,7 @@ class ArpsCurve:
         plt.plot(cumsum_days, prod, label=f"{liquid}", linewidth=1)
 
         # build Model
-        hmodel = Model(hyperbolic_equation)
+        hmodel = Model(DeclineCurve.hyperbolic_equation)
 
         # create lmfit Parameters, named from the arguments of `hyperbolic_equation`
         # note that you really must provide initial values.
@@ -123,26 +123,26 @@ class ArpsCurve:
         plt.show()
 
     def execute_arps(prod_data, days, liquid, b_upper, di_bound, **kwargs):
-        well_list = prod_data.api.unique()
+        well_list = prod_data.API.unique()
         for api_number in well_list:
-            prod_ts = prod_data[prod_data.api == api_number]
+            prod_ts = prod_data[prod_data.API == api_number]
             prod_ts = prod_ts[(prod_ts[liquid].notnull()) & (prod_ts[liquid] > 0)]
             prod_ts["day"] = prod_ts.groupby(by="API").cumcount() + 1
             # convert API & Date to string and liquid to float
             prod_ts = prod_ts.astype({"API": str, "day": int, f"{liquid}": float})
             # Get the highest value of production in the first {days} days of production, to use as qi value
-            qi = get_qi(prod_ts, days, liquid, "day")
+            qi = DeclineCurve.get_qi(prod_ts, days, liquid, "day")
 
             # Hyperbolic curve fit the data to get best fit equation
             popt_hyp, pcov_hyp = curve_fit(
-                hyperbolic_equation,
+                DeclineCurve.hyperbolic_equation,
                 prod_ts["day"],
                 prod_ts[liquid],
                 bounds=(0, [qi, b_upper, di_bound]),
             )
             # print('Hyperbolic Fit Curve-fitted Variables: qi='+str(popt_hyp[0])+', b='+str(popt_hyp[1])+', di='+str(popt_hyp[2]))
             # Hyperbolic fit results
-            prod_ts.loc[:, "hyperbolic_predicted"] = hyperbolic_equation(
+            prod_ts.loc[:, "hyperbolic_predicted"] = DeclineCurve.hyperbolic_equation(
                 prod_ts["day"], *popt_hyp
             )
             y = prod_ts[liquid]
@@ -171,4 +171,4 @@ class ArpsCurve:
             # Create the plot title
             plot_title = "liquid" + " Production for " + str(api_number)
             # Plot the data to visualize the equation fit
-            plot_dca(prod_ts, x_variable, y_variables, plot_title)
+            DeclineCurve.plot_dca(prod_ts, x_variable, y_variables, plot_title)
